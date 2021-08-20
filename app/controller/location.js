@@ -19,7 +19,8 @@ class LocationController extends Controller {
   async getCurLoc(){
     const { ctx, app } = this;
     // 获取，日期 date，帧大小，定位场景 scene_id，这些都是我们在前端传给后端的数据
-    const {user_id, time_stamp, frame_size = 60, scene_id = 'all' } = ctx.query
+    const {user_id, frame_size = 60, scene_id = 'all' } = ctx.query
+    const time_stamp = moment().format('x');
     //获取每天当前定位场景下用户的定位数据
     try {
         // 拿到当前用户的数据列表
@@ -28,9 +29,9 @@ class LocationController extends Controller {
 
         const _list = list.filter(item => {
             if(scene_id!='all'){
-            return Number(item.time_stamp) >= Number(time_stamp)-frame_size && Number(item.time_stamp) <= Number(time_stamp)+frame_size && scene_id == item.scene_id
+            return Number(time_stamp)>=Number(item.time_stamp)-frame_size*1000 && Number(time_stamp)<=Number(item.time_stamp)+frame_size*1000 && scene_id == item.scene_id
             }
-            return Number(item.time_stamp) >= Number(time_stamp)-frame_size && Number(item.time_stamp) <= Number(time_stamp)+frame_size ;
+            return Number(time_stamp)>=Number(item.time_stamp)-frame_size*1000 && Number(time_stamp)<=Number(item.time_stamp)+frame_size*1000
         })
         
         const sortedList = _list.sort((a,b)=>Number(b.time_stamp) - Number(a.time_stamp));
@@ -78,17 +79,17 @@ class LocationController extends Controller {
   async add() {
     const { ctx, app } = this;
     // 获取请求中携带的参数
-    const { user_id, coordinate, scene_id, scene_name, time_stamp, loc_type, remark = '' } = ctx.request.body;
+    const { user_id, coordinate, scene_id, scene_name, loc_type, remark = '' } = ctx.request.body;
 
     // 判空处理，这里前端也可以做，但是后端也需要做一层判断。
-    if (!user_id ||!coordinate || !scene_id || !scene_name || !time_stamp || !loc_type) {
+    if (!user_id ||!coordinate || !scene_id || !scene_name || !loc_type) {
       ctx.body = {
         code: 400,
         msg: '参数错误',
         data: null
       }
     }
-
+    const time_stamp = moment().format('x');
     try {
       const result = await ctx.service.location.add({
         coordinate,

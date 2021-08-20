@@ -38,7 +38,7 @@ module.exports = appInfo => {
       // 端口号
       port: '3306',
       // 用户名
-      user: 'sonic-loc',
+      user: 'root',
       // 密码
       password: '12345678', // 初始化密码，没设置的可以不写
       // 数据库名
