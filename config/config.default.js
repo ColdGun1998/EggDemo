@@ -17,18 +17,18 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [];
-  //配置安防，允许所有请求
+  // 配置安防，允许所有请求
   config.security = {
     csrf: {
       enable: false,
-      ignoreJSON: true
+      ignoreJSON: true,
     },
     domainWhiteList: [ '*' ], // 配置白名单
   };
   config.cors = {
     origin: '*', // 允许所有跨域访问
     credentials: true, // 允许 Cookie 跨域跨域
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
   config.mysql = {
     // 单数据库信息配置
@@ -55,17 +55,17 @@ module.exports = appInfo => {
   };
 
   config.view = {
-    mapping:{'.html':'ejs'}
-  }
+    mapping: { '.html': 'ejs' },
+  };
 
   config.multipart = {
-    mode: 'file'
+    mode: 'file',
   };
 
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
-    uploadDir: 'app/public/upload'
+    uploadDir: 'app/public/upload',
   };
 
   return {

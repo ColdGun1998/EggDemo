@@ -14,11 +14,11 @@ class LocationService extends Service {
       return null;
     }
   }
-  // 获取账单列表
+  // 获取定位列表
   async list(id) {
     const { ctx, app } = this;
     const QUERY_STR = 'id, loc_type, coordinate, time_stamp, scene_id, scene_name, remark';
-    let sql = `select ${QUERY_STR} from location where user_id = ${id}`;
+    const sql = `select ${QUERY_STR} from location where user_id = ${id}`;
     try {
       const result = await app.mysql.query(sql);
       return result;

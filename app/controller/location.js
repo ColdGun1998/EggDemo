@@ -18,7 +18,7 @@ class LocationController extends Controller {
 //   ]
   async getCurLoc(){
     const { ctx, app } = this;
-    // 获取，日期 date，帧大小，定位场景 scene_id，这些都是我们在前端传给后端的数据
+    // 获取，日期 date，帧大小，定位场景 scene_id
     const {user_id, frame_size = 60, scene_id = 'all' } = ctx.query
     const time_stamp = moment().format('x');
     //获取每天当前定位场景下用户的定位数据
