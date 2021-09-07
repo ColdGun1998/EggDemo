@@ -34,11 +34,11 @@ module.exports = appInfo => {
     // 单数据库信息配置
     client: {
       // host
-      host: 'http://121.41.76.185/',
+      host: 'localhost',
       // 端口号
       port: '3306',
       // 用户名
-      user: 'sonic-loc',
+      user: 'root',
       // 密码
       password: '12345678', // 初始化密码，没设置的可以不写
       // 数据库名

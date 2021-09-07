@@ -6,16 +6,6 @@ const Controller = require('egg').Controller;
 
 class LocationController extends Controller {
   //获取当前定位场景最新的一帧定位数据
-//   [
-//     {
-//       loc_type:""
-//       locations:[{},{},{}]
-//      }
-//     {
-//     loc_type:""
-//     locations:[{},{},{}]
-//     }
-//   ]
   async getCurLoc(){
     const { ctx, app } = this;
     // 获取，日期 date，帧大小，定位场景 scene_id

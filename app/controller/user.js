@@ -1,4 +1,6 @@
+'use strict';
 const Controller = require('egg').Controller;
+const moment = require('moment');
 
 class UserController extends Controller {
   async register() {
@@ -103,6 +105,39 @@ class UserController extends Controller {
         ...decode,
       },
     };
+  }
+  // 获取用户列表
+  async getList() {
+    const { ctx, app } = this;
+    const { pageSize = 100, pageNumber = 1 } = ctx.query;
+    try {
+      const list = await ctx.service.user.getList();
+
+      const listMap = list.map(item => {
+        const formatItem = {};
+        formatItem.id = item.id;
+        formatItem.username = item.username;
+        formatItem.password = item.password;
+        formatItem.ctime = moment(+item.ctime).format('YYYY-MM-DD');
+        return formatItem;
+      });
+      // 分页处理
+      const filterList = listMap.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+      ctx.body = {
+        code: 200,
+        msg: '请求成功',
+        data: {
+          total: listMap.length,
+          sceneList: filterList || [], // 格式化后，并且经过分页处理的数据
+        },
+      };
+    } catch (error) {
+      ctx.body = {
+        code: 500,
+        msg: '系统错误',
+        data: null,
+      };
+    }
   }
 
   // 获取用户信息

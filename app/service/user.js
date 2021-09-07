@@ -24,5 +24,18 @@ class UserService extends Service {
       return null;
     }
   }
+  // 获取用户列表
+  async getList() {
+    const { ctx, app } = this;
+    const QUERY_STR = 'id, username, password, ctime';
+    const sql = `select ${QUERY_STR} from user`;
+    try {
+      const result = await app.mysql.query(sql);
+      return result;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 }
 module.exports = UserService;
